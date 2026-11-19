@@ -124,3 +124,13 @@
     opacity: 0.6;
     cursor: wait;
 }
+
+
+/* Footer: Annex, Feedback and Log out on the right, Log out right-most */
+.footer-actions {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
