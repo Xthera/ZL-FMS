@@ -1,0 +1,126 @@
+/* ============================================================
+   LOGIN SCREEN (js/auth.js) - uses the dashboard's theme colours
+   ============================================================ */
+
+.auth-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: grid;
+    place-items: center;
+
+    padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+             max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+
+    background: var(--bg-page, #0a0f15);
+    overflow-y: auto;
+}
+
+.auth-gate[hidden] {
+    display: none;
+}
+
+.auth-card {
+    display: grid;
+    gap: 14px;
+
+    width: min(100%, 360px);
+    padding: 28px 24px;
+
+    border: 1px solid var(--border-subtle, #202d39);
+    border-radius: 14px;
+    background: var(--bg-surface, #101821);
+    color: var(--text-primary, #edf2f6);
+}
+
+.auth-logo {
+    justify-self: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 22px;
+}
+
+.auth-title {
+    margin: 0;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+    margin: -8px 0 4px;
+    text-align: center;
+    color: var(--text-muted, #71808d);
+    font-size: 14px;
+}
+
+.auth-field {
+    display: grid;
+    gap: 6px;
+}
+
+.auth-field span {
+    color: var(--text-muted, #71808d);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.auth-field input {
+    height: 40px;
+    padding: 0 12px;
+
+    border: 1px solid var(--border-medium, #2a3947);
+    border-radius: 8px;
+    background: var(--bg-input, #0c141d);
+    color: var(--text-primary, #edf2f6);
+    font: inherit;
+    font-size: 15px;
+}
+
+.auth-field input:focus {
+    outline: none;
+    border-color: var(--accent, #8fb6d9);
+    box-shadow: 0 0 0 2px var(--accent-soft, rgba(143, 182, 217, 0.12));
+}
+
+.auth-error {
+    margin: 0;
+    color: var(--negative, #e17e84);
+    font-size: 13px;
+}
+
+.auth-error[hidden] {
+    display: none;
+}
+
+.auth-submit {
+    height: 42px;
+    margin-top: 4px;
+
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent, #8fb6d9);
+    color: var(--bg-page, #0a0f15);
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-submit:hover {
+    background: var(--accent-strong, #b5d4ee);
+}
+
+.auth-submit:focus-visible {
+    outline: 2px solid var(--accent-strong, #b5d4ee);
+    outline-offset: 2px;
+}
+
+.auth-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
