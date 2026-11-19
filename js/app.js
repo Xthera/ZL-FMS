@@ -98,10 +98,6 @@ import {
 } from "./update-schedule.js";
 
 import {
-    initializeReports
-} from "./reports.js";
-
-import {
     initializeMonitoring,
     initializeIndexMonitoring
 } from "./monitoring.js";
@@ -240,8 +236,6 @@ const VALID_VIEWS = [
     "fund-explorer",
 
     "monitoring",
-
-    "reports",
 
     "annex",
 
@@ -1301,9 +1295,6 @@ function setCurrentView(
 
         monitoring:
             "#monitoring-view",
-        reports:
-            "#reports-view",
-
         annex:
             "#annex-view",
 
@@ -1385,9 +1376,7 @@ function setCurrentView(
                         ? "#fund-explorer"
                         : normalizedView === "settings"
                             ? "#settings"
-                            : normalizedView === "reports"
-                                ? "#report-generation"
-                                : normalizedView === "annex"
+                            : normalizedView === "annex"
                                         ? "#annex"
                                         : "#monitoring";
 
@@ -1435,12 +1424,6 @@ function getViewFromHash() {
 
         "monitoring":
             "monitoring",
-
-        "report-generation":
-            "reports",
-
-        "reports":
-            "reports",
 
         "annex":
             "annex",
@@ -1780,24 +1763,6 @@ function buildPerformanceResults() {
 
         console.warn(
             "VGrat FMS: monitoring failed.",
-            error
-        );
-
-    }
-
-
-    // Report Generation: investment growth from actual BID prices.
-    try {
-
-        initializeReports({
-            funds: state.data.funds,
-            historyIndex
-        });
-
-    } catch (error) {
-
-        console.warn(
-            "VGrat FMS: report generation failed.",
             error
         );
 
