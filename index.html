@@ -28,13 +28,21 @@
     <!-- Apply the saved text size before the page draws -->
     <script>
         try {
-            var saved = localStorage.getItem("vgrat-fms-font-size");
+            // Settings are kept per dashboard. First visit: start from the
+            // settings that used to be shared by all the dashboards.
+            ["theme", "accent", "font-size", "style"].forEach(function (key) {
+                var own = "zl-fms-" + key, shared = "vgrat-fms-" + key;
+                if (localStorage.getItem(own) === null && localStorage.getItem(shared) !== null) {
+                    localStorage.setItem(own, localStorage.getItem(shared));
+                }
+            });
+            var saved = localStorage.getItem("zl-fms-font-size");
             var named = { small: 0.9, "default": 1, large: 1.15, xlarge: 1.3 };
             var scale = named[saved] || parseFloat(saved);
             if (scale >= 0.8 && scale <= 1.4) {
                 document.documentElement.style.setProperty("--font-scale", String(scale));
             }
-            var theme = localStorage.getItem("vgrat-fms-theme") || "dark";
+            var theme = localStorage.getItem("zl-fms-theme") || "dark";
             var base = { dark: "dark", dim: "dark", midnight: "dark", light: "light", sepia: "light", mint: "light" };
             if (theme === "auto") {
                 base.auto = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
@@ -47,7 +55,7 @@
             }
             var style = localStorage.getItem("zl-fms-style");
             document.documentElement.setAttribute("data-style", style === "classic" ? "classic" : "glass");
-            var accent = localStorage.getItem("vgrat-fms-accent");
+            var accent = localStorage.getItem("zl-fms-accent");
             if (/^(steel|ocean|gold|teal|violet|rose)$/.test(accent || "")) {
                 document.documentElement.setAttribute("data-accent", accent);
             }
