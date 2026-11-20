@@ -32,8 +32,10 @@ function applyStyle(style) {
     markButtons(choice);
 }
 
-document.querySelectorAll("[data-style-option]").forEach(button => {
-    button.addEventListener("click", () => applyStyle(button.dataset.styleOption));
+// One listener on the page, so the buttons work whenever they appear
+document.addEventListener("click", event => {
+    const button = event.target.closest?.("[data-style-option]");
+    if (button) applyStyle(button.dataset.styleOption);
 });
 
 markButtons(currentStyle());
