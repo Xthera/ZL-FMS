@@ -260,6 +260,13 @@ function buildRow(fund) {
         // Set by the data build when this fund failed to update and its
         // last good data is shown instead
         staleSince: fund?.updateStatus?.status === "stale" ? staleDate(fund.updateStatus.lastSuccessfulUpdateUtc) : null,
+        // PruAccess down: latest BID taken from the Prudential website
+        websitePrice: fund?.updateStatus?.status === "website"
+            ? {
+                asAt: details.valuationDate ?? "",
+                since: staleDate(fund.updateStatus.lastSuccessfulUpdateUtc)
+            }
+            : null,
         geographies,
         sectors,
         holdings,
@@ -707,7 +714,7 @@ function renderTable() {
                             <div class="explorer-fund-text">
                                 <div class="fund-name">${escapeHtml(row.name)}</div>
                                 <div class="fund-meta">
-                                    ${escapeHtml(row.code)}${row.hasDividend ? ` · <span class="explorer-dividend-tag">Dividend</span>` : ""}${row.staleSince ? ` · <span class="explorer-stale-tag" title="This fund could not be updated in the latest data run">Not updated since ${escapeHtml(row.staleSince)}</span>` : ""}
+                                    ${escapeHtml(row.code)}${row.hasDividend ? ` · <span class="explorer-dividend-tag">Dividend</span>` : ""}${row.staleSince ? ` · <span class="explorer-stale-tag" title="This fund could not be updated in the latest data run">Not updated since ${escapeHtml(row.staleSince)}</span>` : ""}${row.websitePrice ? ` · <span class="explorer-website-tag" title="PruAccess (the usual price source) has not updated since ${escapeHtml(row.websitePrice.since)}. The latest BID price${row.websitePrice.asAt ? ` (as at ${escapeHtml(row.websitePrice.asAt)})` : ""} comes from the Prudential website instead.">Price from Prudential website</span>` : ""}
                                 </div>
                                 ${holdingNote}
                             </div>
@@ -1476,6 +1483,7 @@ function openProfile(id) {
                     ${row.isIndex ? (row.assetClass && row.assetClass !== "—" ? `<span class="news-badge">${escapeHtml(row.assetClass)}</span>` : "") : `<span class="risk-pill risk-${row.riskOrder}">${escapeHtml(row.risk)}</span>`}
                     ${row.hasDividend ? `<span class="news-badge explorer-dividend-badge">Pays dividend</span>` : ""}
                     ${row.staleSince ? `<span class="news-badge explorer-stale-badge" title="This fund could not be updated in the latest data run">Not updated since ${escapeHtml(row.staleSince)}</span>` : ""}
+                    ${row.websitePrice ? `<span class="news-badge explorer-website-badge" title="PruAccess (the usual price source) has not updated since ${escapeHtml(row.websitePrice.since)}. The latest BID price comes from the Prudential website instead; earlier prices are from PruAccess.">Price from Prudential website</span>` : ""}
                 </div>
 
                 ${details.valuationDate ? `

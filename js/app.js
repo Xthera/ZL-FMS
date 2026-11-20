@@ -213,8 +213,8 @@ let indexLinker = null;
 
 const STORAGE_KEYS = {
 
-    theme: "vgrat-fms-theme",
-    accent: "vgrat-fms-accent",
+    theme: "zl-fms-theme",
+    accent: "zl-fms-accent",
 
     view: "vgrat-fms-view",
 
@@ -222,7 +222,7 @@ const STORAGE_KEYS = {
 
     navCollapsed: "vgrat-fms-nav-collapsed",
 
-    fontSize: "vgrat-fms-font-size"
+    fontSize: "zl-fms-font-size"
 
 };
 
