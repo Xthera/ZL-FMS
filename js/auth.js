@@ -91,8 +91,10 @@ async function startDashboard(user) {
 
     document.getElementById("auth-logout")?.addEventListener("click", logOut);
 
+    // Style buttons first, so they never wait for the data to load
+    import("./style-toggle.js").catch(error => console.error("Style picker failed to load.", error));
     await import("./app.js");
-    await Promise.allSettled([import("./changelog.js"), import("./user-guide.js"), import("./style-toggle.js")]);
+    await Promise.allSettled([import("./changelog.js"), import("./user-guide.js")]);
 }
 
 function showError(message) {
