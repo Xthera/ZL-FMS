@@ -8,7 +8,7 @@
         {
           "title": "New",
           "items": [
-            "Sign in: ZL FMS opens with a sign-in page. Enter your login ID and password. You stay signed in on that device for 12 hours, and Log out (footer, far right) signs you out straight away.",
+            "Sign in: ZL FMS opens with a sign-in page. Enter your login ID and password. You stay signed in until you close the browser (at most 3 hours), and Log out (footer, far right) signs you out straight away in every open tab.",
             "Market Performance: compare up to 8 Prudential funds or market indices on one chart, and see the Top 10 and Lower 10 performers.",
             "Market News: news from CNBC, analysed by AI to show which asset classes, regions, sectors, funds and indices each story may affect.",
             "Fund Explorer: search, filter and sort every Prudential fund and 48 market indices, with a full profile and price chart for each.",
