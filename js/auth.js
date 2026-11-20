@@ -69,7 +69,14 @@ function logOut() {
     } catch {
         /* storage unavailable */
     }
-    window.location.reload();
+    // Back to the plain address: no ?query, no #view
+    window.location.replace(window.location.origin + window.location.pathname);
+}
+
+// Never keep anything after "?" in the address bar (an old failed sign-in
+// could have put the login ID and password there)
+if (window.location.search) {
+    history.replaceState(null, "", window.location.pathname + window.location.hash);
 }
 
 let started = false;
