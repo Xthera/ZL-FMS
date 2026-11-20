@@ -2,8 +2,13 @@
 // LOGIN (ZL FMS)
 //
 // The dashboard (js/app.js) only starts after a correct login ID
-// and password. A sign-in is remembered on this device for
-// SESSION_HOURS; "Log out" in the footer ends it.
+// and password. A sign-in lasts until the browser is closed, and
+// never longer than SESSION_HOURS; "Log out" in the footer ends it
+// (in every open ZL FMS tab).
+//
+// The sign-in is kept in sessionStorage, which the browser clears
+// when it closes. A new tab asks any open ZL FMS tab for the
+// sign-in, so you only sign in again once all of them are closed.
 //
 // This is a login screen on a public website (GitHub Pages):
 // it keeps casual visitors out of the dashboard, but the fund
@@ -13,7 +18,15 @@
 import { USERS } from "./auth-users.js";
 
 const SESSION_KEY = "vgrat-fms-login";
-const SESSION_HOURS = 12;
+const SESSION_HOURS = 3;
+const ASK_TABS_MS = 300;
+
+// Sign-ins used to be kept after the browser closed: remove any left over
+try { localStorage.removeItem(SESSION_KEY); } catch { /* storage unavailable */ }
+
+// Open ZL FMS tabs share the sign-in with new tabs, and log out together
+let channel = null;
+try { channel = new BroadcastChannel("zl-fms-login"); } catch { /* not supported */ }
 
 const gate = document.getElementById("auth-gate");
 const form = document.getElementById("auth-form");
@@ -42,36 +55,74 @@ function sameBytes(a, b) {
     return diff === 0;
 }
 
+function validSession(session) {
+    return session && USERS[session.user] && session.until > Date.now() ? session : null;
+}
+
 function readSession() {
     try {
-        const session = JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
-        if (session && USERS[session.user] && session.until > Date.now()) {
-            return session;
-        }
-        localStorage.removeItem(SESSION_KEY);
+        const session = validSession(JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"));
+        if (!session) sessionStorage.removeItem(SESSION_KEY);
+        return session;
     } catch {
         /* storage unavailable: sign in every visit */
     }
     return null;
 }
 
-function saveSession(user) {
+function storeSession(session) {
     try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify({ user, until: Date.now() + SESSION_HOURS * 3600 * 1000 }));
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
     } catch {
         /* storage unavailable */
     }
 }
 
-function logOut() {
-    try {
-        localStorage.removeItem(SESSION_KEY);
-    } catch {
-        /* storage unavailable */
-    }
+function saveSession(user) {
+    storeSession({ user, until: Date.now() + SESSION_HOURS * 3600 * 1000 });
+}
+
+// No sign-in in this tab: ask the other open ZL FMS tabs for theirs
+function askOtherTabs() {
+    if (!channel) return Promise.resolve(null);
+    return new Promise(resolve => {
+        const timer = setTimeout(() => { channel.removeEventListener("message", onReply); resolve(null); }, ASK_TABS_MS);
+        function onReply(event) {
+            const session = event.data?.type === "session" ? validSession(event.data.session) : null;
+            if (!session) return;
+            clearTimeout(timer);
+            channel.removeEventListener("message", onReply);
+            resolve(session);
+        }
+        channel.addEventListener("message", onReply);
+        channel.postMessage({ type: "ask" });
+    });
+}
+
+function backToSignIn() {
     // Back to the plain address: no ?query, no #view
     window.location.replace(window.location.origin + window.location.pathname);
 }
+
+function logOut() {
+    try {
+        sessionStorage.removeItem(SESSION_KEY);
+    } catch {
+        /* storage unavailable */
+    }
+    channel?.postMessage({ type: "logout" });
+    backToSignIn();
+}
+
+channel?.addEventListener("message", event => {
+    if (event.data?.type === "ask") {
+        const session = readSession();
+        if (session) channel.postMessage({ type: "session", session });
+    } else if (event.data?.type === "logout" && readSession()) {
+        try { sessionStorage.removeItem(SESSION_KEY); } catch { /* storage unavailable */ }
+        backToSignIn();
+    }
+});
 
 // Never keep anything after "?" in the address bar (an old failed sign-in
 // could have put the login ID and password there)
@@ -142,11 +193,18 @@ form.addEventListener("submit", async event => {
     }
 });
 
-const session = readSession();
+(async () => {
+    let session = readSession();
 
-if (session) {
-    startDashboard(session.user);
-} else {
-    gate.hidden = false;
-    idInput.focus();
-}
+    if (!session) {
+        session = await askOtherTabs();
+        if (session) storeSession(session);
+    }
+
+    if (session) {
+        startDashboard(session.user);
+    } else {
+        gate.hidden = false;
+        idInput.focus();
+    }
+})();
