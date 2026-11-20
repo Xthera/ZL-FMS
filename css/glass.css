@@ -209,14 +209,18 @@ html[data-style="glass"] .page-header {
 
     padding: 26px 30px;
 
+    border: 1px solid var(--g-edge);
     border-radius: 24px;
 
+    /* Follows the theme and colour palette */
     background:
-        radial-gradient(60% 120% at 92% 0%, var(--g-banner-glow), transparent 60%),
-        linear-gradient(120deg, var(--g-banner-from), var(--g-banner-to));
-    color: #ffffff;
+        radial-gradient(55% 140% at 95% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%),
+        linear-gradient(120deg,
+            color-mix(in srgb, var(--accent) 16%, var(--bg-surface)),
+            color-mix(in srgb, var(--accent) 6%, var(--bg-surface)));
+    color: var(--text-primary);
 
-    box-shadow: 0 14px 40px rgba(8, 20, 50, 0.28);
+    box-shadow: var(--g-shadow);
 }
 
 html[data-style="glass"] .page-header::after {
@@ -225,31 +229,51 @@ html[data-style="glass"] .page-header::after {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 42%);
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.07), transparent 42%);
 }
 
 html[data-style="glass"] .page-header .eyebrow {
-    color: #f0cf7a;
+    color: var(--accent);
+}
+
+html[data-style="glass"] .page-header .page-title,
+html[data-style="glass"] .page-header .meta-value {
+    color: var(--text-primary);
+}
+
+html[data-style="glass"] .page-header .page-description,
+html[data-style="glass"] .page-header .meta-label {
+    color: var(--text-secondary);
+}
+
+html[data-style="glass"] .page-header-meta {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border-subtle));
+}
+
+/* Mint keeps the reel's dark green banner */
+html[data-style="glass"][data-variant="mint"] .page-header {
+    border-color: transparent;
+    background:
+        radial-gradient(60% 120% at 92% 0%, var(--g-banner-glow), transparent 60%),
+        linear-gradient(120deg, var(--g-banner-from), var(--g-banner-to));
+    box-shadow: 0 14px 40px rgba(18, 52, 40, 0.25);
 }
 
 html[data-style="glass"][data-variant="mint"] .page-header .eyebrow {
     color: #bfe8d6;
 }
 
-html[data-style="glass"] .page-header .page-title {
+html[data-style="glass"][data-variant="mint"] .page-header .page-title,
+html[data-style="glass"][data-variant="mint"] .page-header .meta-value {
     color: #ffffff;
 }
 
-html[data-style="glass"] .page-header .page-description,
-html[data-style="glass"] .page-header .meta-label {
-    color: rgba(235, 242, 250, 0.74);
+html[data-style="glass"][data-variant="mint"] .page-header .page-description,
+html[data-style="glass"][data-variant="mint"] .page-header .meta-label {
+    color: rgba(235, 245, 240, 0.76);
 }
 
-html[data-style="glass"] .page-header .meta-value {
-    color: #ffffff;
-}
-
-html[data-style="glass"] .page-header-meta {
+html[data-style="glass"][data-variant="mint"] .page-header-meta {
     border-color: rgba(255, 255, 255, 0.18);
 }
 
@@ -336,26 +360,9 @@ html[data-style="glass"] .footer-feedback {
 
 /* ---------- Smooth page changes ---------- */
 
-@keyframes glass-rise {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-html[data-style="glass"] .page-view:not([hidden]) {
-    animation: glass-rise 360ms cubic-bezier(.2, .8, .2, 1);
-}
+/* Page changes animate through js/motion.js */
 
 @media (prefers-reduced-motion: reduce) {
-    html[data-style="glass"] .page-view:not([hidden]) {
-        animation: none;
-    }
-
     html[data-style="glass"] .summary-card:hover,
     html[data-style="glass"] .news-card:hover {
         transform: none;
