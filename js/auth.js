@@ -87,11 +87,13 @@ async function startDashboard(user) {
 
     gate.hidden = true;
     app.style.display = "";
+    app.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: "ease-out" });
     document.documentElement.dataset.user = user;
 
     document.getElementById("auth-logout")?.addEventListener("click", logOut);
 
-    // Style buttons first, so they never wait for the data to load
+    // Style buttons and smooth opening first, so they never wait for the data
+    import("./motion.js").catch(error => console.error("Smooth opening failed to load.", error));
     import("./style-toggle.js").catch(error => console.error("Style picker failed to load.", error));
     await import("./app.js");
     await Promise.allSettled([import("./changelog.js"), import("./user-guide.js")]);
