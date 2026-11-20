@@ -1,0 +1,35 @@
+{
+  "versions": [
+    {
+      "version": "V1.0.0",
+      "date": "2026-11-20",
+      "summary": "First release of ZL FMS: Prudential fund and market index monitoring behind a personal sign-in, with the Glass look and animated charts.",
+      "sections": [
+        {
+          "title": "New",
+          "items": [
+            "Sign in: ZL FMS opens with a sign-in page. Enter your login ID and password. You stay signed in on that device for 12 hours, and Log out (footer, far right) signs you out straight away.",
+            "Market Performance: compare up to 8 Prudential funds or market indices on one chart, and see the Top 10 and Lower 10 performers.",
+            "Market News: news from CNBC, analysed by AI to show which asset classes, regions, sectors, funds and indices each story may affect.",
+            "Fund Explorer: search, filter and sort every Prudential fund and 48 market indices, with a full profile and price chart for each.",
+            "Monitoring: a watchlist with alert rules, plus a scan of unusual moves across all funds or indices.",
+            "Annex (footer): Prudential product brochures in English and Chinese. Feedback (footer) opens a short feedback form.",
+            "Glass style: frosted, rounded cards on a soft colour background, a floating side menu, page banners that follow your theme and colour palette, and bigger headline numbers. Settings > Style switches between Glass and Classic (the original flat look).",
+            "Mint theme: a soft green theme with a dark green side menu. Every other theme and colour palette works with both styles.",
+            "Smooth opening: pages, tabs, drop-down menus, sections such as Alert rules and News overview, and pop-up windows now flow in instead of popping up. Tables fade in when you change the period.",
+            "Logo menu: press the logo at the top left to expand the side menu (icons and page names) or shrink it to a narrow column of icons. The three-line menu button is gone, and each dashboard remembers your choice.",
+            "Animated charts: when you add a fund or index, its line draws from the start of the period to the end; a removed one fades away; changing the period redraws every line. The chart in a fund profile draws in the same way.",
+            "Backup prices: when PruAccess (the usual source of BID prices) is down, the latest BID price is taken from Prudential's website instead. These funds are marked “Price from Prudential website” in Fund Explorer, and the full PruAccess history replaces the backup prices once PruAccess is back."
+          ]
+        },
+        {
+          "title": "Improved",
+          "items": [
+            "Settings: style, theme, colour palette and text size are saved for ZL FMS only and don't affect other dashboards.",
+            "Help: Settings > Help opens the ZL FMS user guide, and the version number in the footer opens this changelog."
+          ]
+        }
+      ]
+    }
+  ]
+}
