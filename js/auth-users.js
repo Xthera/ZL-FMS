@@ -15,5 +15,4 @@
 // ============================================================
 
 export const USERS = {
-    "admin": { salt: "64RlKUyTH/Fs0uBA332uDw==", hash: "nc60VbCQFjmxG/uyBJM1LAGiLsUm6T8oDyJKxLIPjxs=", iterations: 210000 },
-};
+       "admin": { salt: "sy+qJIP7FUVoRdLPg9zFbg==", hash: "VYS9TpynKkK84cgMTyepdWz+vdDyqqrj4I3HFMdC0o4=", iterations: 210000 },
