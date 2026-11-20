@@ -92,7 +92,7 @@ async function startDashboard(user) {
     document.getElementById("auth-logout")?.addEventListener("click", logOut);
 
     await import("./app.js");
-    await Promise.allSettled([import("./changelog.js"), import("./user-guide.js")]);
+    await Promise.allSettled([import("./changelog.js"), import("./user-guide.js"), import("./style-toggle.js")]);
 }
 
 function showError(message) {
