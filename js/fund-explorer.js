@@ -23,7 +23,9 @@ import { placeDropdown } from "./dropdown-place.js";
 import {
     createChart,
     destroyChart,
-    getFontScale
+    getFontScale,
+    lineMotionPlugin,
+    revealChartLines
 } from "./charts.js";
 
 import {
@@ -787,6 +789,7 @@ function ensureDialog() {
 
         dialog.addEventListener("close", () => {
             document.body.classList.remove("has-news-dialog");
+            lastProfileMotionKey = null;
             destroyChart(PROFILE_CHART_ID);
         });
 
@@ -1144,6 +1147,8 @@ function setChartStatus(message) {
     }
 }
 
+let lastProfileMotionKey = null;
+
 function renderProfileChart() {
     const dialog = document.getElementById("fund-dialog");
 
@@ -1295,7 +1300,7 @@ function renderProfileChart() {
         }
     };
 
-    createChart(PROFILE_CHART_ID, {
+    const profileChart = createChart(PROFILE_CHART_ID, {
         type: "line",
 
         data: {
@@ -1317,7 +1322,7 @@ function renderProfileChart() {
             ]
         },
 
-        plugins: [crosshair],
+        plugins: [crosshair, lineMotionPlugin],
 
         options: {
             responsive: true,
@@ -1388,6 +1393,13 @@ function renderProfileChart() {
             }
         }
     });
+
+    // Draw the line from start to end when a fund or period is opened
+    const motionKey = `${fundId}|${range}|${qs("#fund-chart-from")?.value ?? ""}|${qs("#fund-chart-to")?.value ?? ""}`;
+    if (profileChart && motionKey !== lastProfileMotionKey) {
+        revealChartLines(profileChart, profileChart.data.datasets.map((_, index) => index));
+    }
+    lastProfileMotionKey = motionKey;
 }
 
 function bindChartControls(dialog) {
