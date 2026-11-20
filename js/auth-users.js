@@ -16,3 +16,4 @@
 
 export const USERS = {
        "admin": { salt: "sy+qJIP7FUVoRdLPg9zFbg==", hash: "VYS9TpynKkK84cgMTyepdWz+vdDyqqrj4I3HFMdC0o4=", iterations: 210000 },
+};
