@@ -36,9 +36,25 @@
 
 .auth-logo {
     justify-self: center;
-    width: 120px;
-    height: 120px;
-    border-radius: 22px;
+    width: 140px;
+    height: 140px;
+    padding: 14px;
+    box-sizing: border-box;
+    object-fit: contain;
+    border-radius: 24px;
+    background: #f3f6f8;   /* light tile: the navy letters disappear on the dark theme */
+}
+
+/* Same light tile behind the logo in the dashboard header */
+.brand-mark {
+    border-radius: 9px;
+    background: #f3f6f8;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.brand-mark img {
+    filter: none;
 }
 
 .auth-title {
