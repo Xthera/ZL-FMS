@@ -144,7 +144,7 @@ async function startDashboard(user) {
     document.getElementById("auth-logout")?.addEventListener("click", logOut);
 
     // Style buttons and smooth opening first, so they never wait for the data
-    import("./motion.js").catch(error => console.error("Smooth opening failed to load.", error));
+    import("./motion.js?v=2").catch(error => console.error("Smooth opening failed to load.", error));
     import("./style-toggle.js").catch(error => console.error("Style picker failed to load.", error));
     await import("./app.js");
     await Promise.allSettled([import("./changelog.js"), import("./user-guide.js")]);

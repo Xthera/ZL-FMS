@@ -9,7 +9,7 @@
 // itself from that first entry.
 // ============================================================
 
-const SOURCE = "/vgrat-fmms/data/changelog.json";
+const SOURCE = "data/changelog.json";
 
 let cache = null;
 
@@ -105,7 +105,8 @@ async function openChangelog() {
 
     body.innerHTML = `<p class="changelog-status">Loading changelog…</p>`;
     document.body.classList.add("has-news-dialog");
-    if (!dialog.open) dialog.showModal();
+    // Also re-open a popup that is still fading out after closing
+    if (!dialog.open || dialog.classList.contains("is-closing")) dialog.showModal();
     body.scrollTop = 0;
 
     try {
