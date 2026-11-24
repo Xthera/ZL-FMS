@@ -28,6 +28,12 @@
             "Settings: style, theme, colour palette and text size are saved for ZL FMS only and don't affect other dashboards.",
             "Help: Settings > Help opens the ZL FMS user guide, and the version number in the footer opens this changelog."
           ]
+        },
+        {
+          "title": "Fixed",
+          "items": [
+            "Fund lists: clicking a fund now always opens it. Before, a click could be lost if text on the page was highlighted, or if you clicked another fund while the previous one was still closing."
+          ]
         }
       ]
     }
